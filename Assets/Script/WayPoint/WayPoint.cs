@@ -9,7 +9,7 @@ namespace Script.WayPoint
 
         public void AddWayPoint()
         {
-            
+            //OVRInput.RawButton
         }
     }
 }
