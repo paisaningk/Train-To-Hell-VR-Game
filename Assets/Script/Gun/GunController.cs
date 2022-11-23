@@ -77,7 +77,7 @@ namespace Script
         
         IEnumerator SetAnimator(GunComponent gun)
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.1f);
             gun.isTriggering = false;
             gun.animator.SetBool(IsTrigger,false);
         }
