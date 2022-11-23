@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78549641fc7244e384f5b0cfd66f4edd, type: 3}
+  m_Name: SoundData
+  m_EditorClassIdentifier: 
+  soundDataList:
+  - id: Hit
+    clip: {fileID: 8300000, guid: 4aa7898da58e1c743a4166136cf03bbf, type: 3}
+    type: 0
+    volume: 1
+    audioSource: {fileID: 0}
+  - id: Dead
+    clip: {fileID: 8300000, guid: 0068a689b9bde11458dc124d558ce1c3, type: 3}
+    type: 0
+    volume: 1
+    audioSource: {fileID: 0}
+  - id: Button
+    clip: {fileID: 8300000, guid: 4f5879825c2d8e14d896abf799a61bcc, type: 3}
+    type: 0
+    volume: 1
+    audioSource: {fileID: 0}
+  - id: Train
+    clip: {fileID: 8300000, guid: a25061342cc1bf74ab1508c55ae4a4e7, type: 3}
+    type: 1
+    volume: 0.25
+    audioSource: {fileID: 0}
+  - id: Song
+    clip: {fileID: 8300000, guid: 4295c39bfc17d1c4e9f14df1f62061cc, type: 3}
+    type: 1
+    volume: 0.25
+    audioSource: {fileID: 0}
+  - id: Main
+    clip: {fileID: 8300000, guid: b50f90c4cee4be3479b4c273c7874c35, type: 3}
+    type: 1
+    volume: 0.1
+    audioSource: {fileID: 0}

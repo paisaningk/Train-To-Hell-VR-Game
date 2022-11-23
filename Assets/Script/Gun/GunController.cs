@@ -44,7 +44,7 @@ namespace Script
             
             Ray ray = new Ray(gunComponent.startPositionLine.position,gunComponent.startPositionLine.forward);
                 
-            if (Physics.Raycast(ray, out RaycastHit raycastHit, 5, shootLayerMask))
+            if (Physics.Raycast(ray, out RaycastHit raycastHit, 15, shootLayerMask))
             {
                 if (raycastHit.collider.TryGetComponent(out EnemyData enemyData ))
                 {
@@ -64,7 +64,7 @@ namespace Script
         {
             var startPosition = gunComponent.gunLineRenderer.transform.position;
             gunComponent.gunLineRenderer.SetPosition(0, startPosition);
-            gunComponent.gunLineRenderer.SetPosition(1, startPosition + (gunComponent.startPositionLine.forward * 5));
+            gunComponent.gunLineRenderer.SetPosition(1, startPosition + (gunComponent.startPositionLine.forward * 15));
         }
     }
 
