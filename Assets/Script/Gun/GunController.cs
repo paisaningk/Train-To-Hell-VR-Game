@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Script.Enemy;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -16,6 +18,7 @@ namespace Script
         [SerializeField] private GunComponent leftGunComponents;
         [SerializeField] private GunComponent rightGunComponents;
         [SerializeField] private LayerMask shootLayerMask;
+        private static readonly int IsTrigger = Animator.StringToHash("isTrigger");
 
         // Start is called before the first frame update
         private void Start()
@@ -39,7 +42,12 @@ namespace Script
         private void Shoot(GunComponent gunComponent)
         {
             Debug.Log("Shoot");
-            
+            if (!gunComponent.isTriggering)
+            {
+                gunComponent.animator.SetBool(IsTrigger,true);
+                gunComponent.isTriggering = true;
+                StartCoroutine(SetAnimator(gunComponent));
+            }
             gunComponent.shootSource.Play();
             
             Ray ray = new Ray(gunComponent.startPositionLine.position,gunComponent.startPositionLine.forward);
@@ -66,6 +74,13 @@ namespace Script
             gunComponent.gunLineRenderer.SetPosition(0, startPosition);
             gunComponent.gunLineRenderer.SetPosition(1, startPosition + (gunComponent.startPositionLine.forward * 15));
         }
+        
+        IEnumerator SetAnimator(GunComponent gun)
+        {
+            yield return new WaitForSeconds(0.5f);
+            gun.isTriggering = false;
+            gun.animator.SetBool(IsTrigger,false);
+        }
     }
 
     [Serializable]
@@ -74,5 +89,7 @@ namespace Script
         public LineRenderer gunLineRenderer;
         public Transform startPositionLine;
         public AudioSource shootSource;
+        public Animator animator;
+        public bool isTriggering;
     }
 }

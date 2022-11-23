@@ -54,24 +54,8 @@ namespace Script.Singleton
 
             m_Instance = GetComponent<T>();
             DontDestroyOnLoad(gameObject);
-            InitAfterAwake();
         }
 
-        private void InitAfterAwake()
-        {
-
-        }
-
-        private void OnApplicationQuit()
-        {
-            m_ShuttingDown = true;
-        }
-
-        private void OnDestroy()
-        {
-            m_ShuttingDown = true;
-        }
-
-       
+        public void DestroyThyself() { Destroy( gameObject); m_Instance = null; }
     }
 }

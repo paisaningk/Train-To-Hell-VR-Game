@@ -1,30 +1,74 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Script.Singleton;
 using UnityEngine;
 
 namespace Script.Player
 {
-    public class Controller : Singleton<Controller>
+    public class Controller : MonoBehaviour
     {
         [SerializeField]private ControllerData[] controllerDataSet;
+        public List<GameObject> controller;
+        public Transform spawnPoint;
 
         public void ChangeController(ControllerType type)
         {
-            foreach (var data in controllerDataSet)
+            switch (type)
             {
-                foreach (var controllerGameObject in data.controllerGameObjects)
+                case ControllerType.UI:
+                    IsTypeUI();
+                    break;
+                case ControllerType.GamePlay:
+                    IsTypeGamePlay();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+        }
+
+        private void IsTypeUI()
+        {
+            foreach (var controllerData in controllerDataSet)
+            {
+                if (controllerData.controllerType == ControllerType.GamePlay)
                 {
-                    controllerGameObject.SetActive(false);
+                    foreach (var variable in controllerData.controllerGameObjects)
+                    {
+                        variable.SetActive(false);
+                    }
                 }
             }
-            var controllerData = controllerDataSet.FirstOrDefault(data => data.controllerType == type);
 
-            if (controllerData != null)
+            var ui = controllerDataSet.FirstOrDefault(data => data.controllerType == ControllerType.UI);
+
+            if (ui == null) return;
             {
-                foreach (var variable in controllerData.controllerGameObjects)
+                foreach (var variable in ui.controllerGameObjects)
                 {
-                    variable.SetActive(true);
+                    var instantiate = Instantiate(variable, spawnPoint);
+                    instantiate.SetActive(true);
+                    controller.Add(instantiate);
+                }
+            }
+        }
+
+        private void IsTypeGamePlay()
+        {
+            foreach (var variable in controller)
+            {
+                DestroyImmediate(variable);
+            }
+            controller.Clear();
+            
+            foreach (var controllerData in controllerDataSet)
+            {
+                if (controllerData.controllerType == ControllerType.GamePlay)
+                {
+                    foreach (var variable in controllerData.controllerGameObjects)
+                    {
+                        variable.SetActive(true);
+                    }
                 }
             }
         }

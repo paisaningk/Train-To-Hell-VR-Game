@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections;
 using DG.Tweening;
+using Script.Game;
 using Script.Sound;
 using Sirenix.OdinInspector;
 using TMPro;
-using UnityEditor.Animations;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -17,6 +17,7 @@ namespace Script.Enemy
         public TMP_Text damageText;
         public Animator animator;
         public bool isDead = false;
+        public ScoreCount scoreCount;
         private static readonly int A = Animator.StringToHash("A");
         private static readonly int IsDead = Animator.StringToHash("isDead");
 
@@ -36,18 +37,16 @@ namespace Script.Enemy
         public void DoDamage()
         {
             if (isDead) return;
-            var range = Random.Range(50, 100);
             hp -= 1;
             
             var instantiate = Instantiate(damageText, spawnPoint);
+            var range = Random.Range(50, 100);
             instantiate.text = $"{range}";
             
             StartCoroutine(ShowTextAMoment(instantiate));
             
             if (hp <= 0 && !isDead)
             {
-                SoundManager.Instance.Play("Dead");
-                isDead = true;
                 Dead();
             }
             else
@@ -59,6 +58,9 @@ namespace Script.Enemy
         private void Dead()
         {
             StartCoroutine(DelayDead());
+            SoundManager.Instance.Play("Dead");
+            isDead = true;
+            scoreCount.AddScore();
         }
         
         IEnumerator ShowTextAMoment(TMP_Text text)
